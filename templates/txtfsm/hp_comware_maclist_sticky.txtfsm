@@ -1,0 +1,9 @@
+Value MAC (.{4}\-.{4}\-.{4})
+Value VLAN (\d+)
+Value TYPE ([A-Za-z]+)
+Value IF ([a-zA-Z\-]+\d*\/?\d*\/?\d*)
+Value AGE ([A-Za-z]+)
+
+
+Start
+  ^${MAC}\s+${VLAN}\s+${TYPE}\s+${IF}\s+${AGE} -> Record

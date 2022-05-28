@@ -1,0 +1,17 @@
+Value Required Port (.*)
+Value Required TransceiverType (\S+)
+Value Distance (.+)
+Value Vendor (\S+)
+Value Date (.*)
+Value Serial (\S+)
+
+
+
+Start
+  ^${Port} transceiver information\:
+  ^\s+Transceiver Type\s+\:${TransceiverType}
+  ^\s+Transfer Distance\(m\)\s+\:${Distance} 
+  ^Manufacture information\:
+  ^\s+Vendor Name\s+\:${Vendor} 
+  ^\s+Manufacturing Date\s+\:${Date} 
+  ^\s+Manu. Serial Number\s+\:${Serial} -> Record

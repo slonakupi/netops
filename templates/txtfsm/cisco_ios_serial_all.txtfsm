@@ -1,0 +1,5 @@
+Value Model (\b.*?\b)
+Value Serial (\b\S+\b)
+
+Start
+  ^PID\:\s+${Model}\s.*.*SN\:\s${Serial} -> Record

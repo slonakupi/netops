@@ -1,0 +1,11 @@
+Value Interface (.*)
+Value Status (up|down|administratively down)
+Value Protocol (up|down)
+Value IP ([unasiged0-9\.-]+)
+Value Description (.*)
+Value OK (\w+)
+Value Method ([a-zA-z-]+)
+
+Start
+  ^${Interface}\s+${IP}\s+${OK}\s+${Method}\s+${Status}\s+${Protocol} -> Record
+  

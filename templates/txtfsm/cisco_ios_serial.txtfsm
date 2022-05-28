@@ -1,0 +1,4 @@
+Value Serial (\b\S+\b)
+
+Start
+  ^[Ss]ystem [Ss]erial [Nn]umber\s*\:\s*${Serial}\s* -> Record

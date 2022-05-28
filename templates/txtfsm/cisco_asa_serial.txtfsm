@@ -1,0 +1,4 @@
+Value Serial (\b[^M0-9]\S+\b)
+
+Start
+  ^.*SN:\s*${Serial}.* -> Record

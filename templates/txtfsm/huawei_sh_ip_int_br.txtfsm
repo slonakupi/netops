@@ -1,0 +1,9 @@
+Value Interface (.*)
+Value Status (.?(?:up|down)(?:\(.\))?)
+Value Protocol (.?(?:up|down)(?:\(.\))?)
+Value IP ([unasiged0-9/\.-]+)
+Value Description (.*)
+
+Start
+  ^${Interface}\s+${IP}\s+${Status}\s+${Protocol} -> Record
+  

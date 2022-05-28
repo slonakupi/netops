@@ -1,0 +1,8 @@
+Value VLAN ([Al0-9]+)
+Value MAC (.{4}\..{4}\..{4})
+Value TYPE ([A-Z]+)
+Value IF ([a-zA-Z\-]+\d*\/?\d*\/?\d*)
+
+Start
+  ^\s*${VLAN}\s+${MAC}\s+${TYPE}\s+${IF} -> Record
+  
