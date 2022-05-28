@@ -24,12 +24,11 @@ __pycache__/*
 /cfg/base/*
 !/cfg/base/.gitkeep
 
-
-
 results/*
 !results/.gitkeep
 
 xlsx/*
+!xlsx/hosts.xlsx
 
 !xlsx/mactable
 xlsx/mactable/*
