@@ -470,7 +470,7 @@ def result_to_pd(dataframe, FILENAME):
                                                                                   ftype='xlsx')):  # if file exists
                         filepath = '{path}\\{ip_dev}_if_result.{ftype}'.format(path=cfgbase_dir, ip_dev=IP_DEV,
                                                                                ftype='xlsx')
-                        if_data_result = pd.read_excel(filepath, encoding='cp1251')
+                        if_data_result = pd.read_excel(filepath)
                         IF_RESULT_PD = IF_RESULT_PD.append(if_data_result, ignore_index=True)
                         os.remove(filepath)  # DELETE file after successful read
 
@@ -482,12 +482,12 @@ def result_to_pd(dataframe, FILENAME):
         # print('Saving file ' + 'results\\{0}_{1}_res.xlsx'.format(FILENAME,NOWSTR))
         if not dataframe.empty:
             print('Saving file results\\{0}_{1}_res.xlsx'.format(FILENAME, NOWSTR))
-            dataframe.to_excel('results\\{0}_{1}_res.xlsx'.format(FILENAME, NOWSTR), encoding='cp1251',
+            dataframe.to_excel('results\\{0}_{1}_res.xlsx'.format(FILENAME, NOWSTR),
                                index=False)  # save to ls file
 
         if not IF_RESULT_PD.empty:
             print('Saving file results\\{0}_{1}_ifsummary_res.xlsx'.format(FILENAME, NOWSTR))
-            IF_RESULT_PD.to_excel('results\\{0}_{1}_ifsummary_res.xlsx'.format(FILENAME, NOWSTR), encoding='cp1251',
+            IF_RESULT_PD.to_excel('results\\{0}_{1}_ifsummary_res.xlsx'.format(FILENAME, NOWSTR),
                                   index=False)  # save to ls file
 
     except Exception as e:
@@ -562,35 +562,35 @@ def get_config_th(**kwargs):
                 file.write(HOSTNAME)  # записать в файл           
 
             kwargs[CONFIG_COLUMN] = ssh.send_command(SHRUN_CMD[kwargs[PROFILE_COLUMN]])  # отправить команду show run
-            with open('{path}\\{filename}.cfg'.format(path=cfgbase_dir, filename=IP), 'w',
-                      encoding='utf-8') as file:  # открыть файл базы данных конфигов
+            with open('{path}\\{filename}.cfg'.format(path=cfgbase_dir, filename=IP), 'w') as file:  # открыть файл базы данных конфигов
                 file.write(kwargs[CONFIG_COLUMN])  # записать в файл
-            '''
+            
             kwargs[VERSIONFULL_COLUMN] = ssh.send_command(SHVER_CMD[kwargs[PROFILE_COLUMN]])  # отправить команду show ver
-            with open('{path}\\{filename}.ver'.format(path = cfgbase_dir, filename = IP), 'w', encoding='utf-8') as file:  # открыть файл базы данных конфигов
+            with open('{path}\\{filename}.ver'.format(path = cfgbase_dir, filename = IP), 'w') as file:  # открыть файл базы данных конфигов
                 file.write(kwargs[VERSIONFULL_COLUMN])  # записать в файл                
                 
             kwargs[INV_COLUMN] = ssh.send_command(INV_CMD[kwargs[PROFILE_COLUMN]])  # отправить команду show inventory
-            with open('{path}\\{filename}.inv'.format(path = cfgbase_dir, filename = IP), 'w', encoding='utf-8') as file:  # открыть файл базы данных конфигов
+            with open('{path}\\{filename}.inv'.format(path = cfgbase_dir, filename = IP), 'w') as file:  # открыть файл базы данных конфигов
                 file.write(kwargs[INV_COLUMN])  # записать в файл\
 
             #kwargs[IP_INT_COLUMN] = ssh.send_command(SH_IP_INT_BR_CMD[kwargs[PROFILE_COLUMN]])  # отправить команду show ip int brief
-            #with open('{path}\\{filename}.if_ip'.format(path = cfgbase_dir, filename = IP), 'w', encoding='utf-8') as file:  # открыть файл базы данных конфигов
+            #with open('{path}\\{filename}.if_ip'.format(path = cfgbase_dir, filename = IP), 'w') as file:  # открыть файл базы данных конфигов
             #    file.write(kwargs[IP_INT_COLUMN])  # записать в файл
                 
-            if kwargs[PROFILE_COLUMN] == 'cisco_ios':
+            #if kwargs[PROFILE_COLUMN] == 'cisco_ios':
+            
             kwargs[CDP_COLUMN] = ssh.send_command(SH_CDP_NE_CMD[kwargs[PROFILE_COLUMN]])  # отправить команду show cdp ne
-            with open('{path}\\{filename}.cdp_ne'.format(path = cfgbase_dir, filename = IP), 'w', encoding='utf-8') as file:  # открыть файл базы данных конфигов
+            with open('{path}\\{filename}.cdp_ne'.format(path = cfgbase_dir, filename = IP), 'w') as file:  # открыть файл базы данных конфигов
                 file.write(kwargs[CDP_COLUMN])  # записать в файл
 
             kwargs[LLDP_COLUMN] = ssh.send_command(SH_LLDP_NE_CMD[kwargs[PROFILE_COLUMN]])  # отправить команду show lldp ne
-            with open('{path}\\{filename}.lldp_ne'.format(path = cfgbase_dir, filename = IP), 'w', encoding='utf-8') as file:  # открыть файл базы данных конфигов
+            with open('{path}\\{filename}.lldp_ne'.format(path = cfgbase_dir, filename = IP), 'w') as file:  # открыть файл базы данных конфигов
                 file.write(kwargs[LLDP_COLUMN])  # записать в файл
                 
             kwargs[INT_DESC_COLUMN] = ssh.send_command(SH_INT_DESC_CMD[kwargs[PROFILE_COLUMN]]) # отправить команду show int description          
-            with open('{path}\\{filename}.if_desc'.format(path = cfgbase_dir, filename = IP), 'w', encoding='utf-8') as file:  # открыть файл базы данных конфигов
+            with open('{path}\\{filename}.if_desc'.format(path = cfgbase_dir, filename = IP), 'w') as file:  # открыть файл базы данных конфигов
                 file.write(kwargs[INT_DESC_COLUMN])  # записать в файл
-            '''
+            
             print(color.GREEN + '{:<40s}{:<16s}{:<40s}{:<15s}'.format(HOSTNAME, IP, 'Get data', 'OK') + color.END)
 
             with open('{path}\\{filename}.err'.format(path=cfgbase_dir, filename=IP), 'w',
@@ -710,7 +710,7 @@ def getmacinfo(**kwargs):
             # for i,mac in enumerate(maclist_pd['MAC']):
             #    maclist_pd.loc[i, 'MAC'] = mac_norm(mac)
 
-            # maclist_pd.to_excel('xlsx\\mactable\{0}_mactable.xlsx'.format(kwargs[HOSTNAME_COLUMN]), encoding='cp1251',index=False)  # save to xlsx file
+            # maclist_pd.to_excel('xlsx\\mactable\{0}_mactable.xlsx'.format(kwargs[HOSTNAME_COLUMN]),index=False)  # save to xlsx file
 
             print(color.GREEN + 'MAC table\t{0}\t{1}\t\t\tOK'.format(HOSTNAME, kwargs[IP_COLUMN]) + color.END)
 
@@ -819,8 +819,7 @@ def maclist_to_excel(DEVICES_RUN):
             if PROFILE == 'poligon':
                 maclist_pd[IF_COLUMN] = maclist_pd[IF_COLUMN].str.lower()
 
-            maclist_pd.to_excel('{path}\\{filename}.xlsx'.format(path=mactable_dir, filename=IP_DEV + '_mactable'),
-                                encoding='cp1251', index=False)  # save to xlsx file
+            maclist_pd.to_excel('{path}\\{filename}.xlsx'.format(path=mactable_dir, filename=IP_DEV + '_mactable'), index=False)  # save to xlsx file
 
 
 
@@ -1177,8 +1176,7 @@ def get_if(DEVICES_RUN):
             # print('1')
             DEVICES_RUN_CSV = DEVICES_RUN[DEVICES_RUN[DATA_COLUMN] == CSV]
 
-            DATA_TABLE = pd.read_excel('{path}\\{filename}'.format(path=data_dir, filename=CSV),
-                                       encoding='cp1251')  # прочитать таблицу соответствия USER >> MAC
+            DATA_TABLE = pd.read_excel('{path}\\{filename}'.format(path=data_dir, filename=CSV))  # прочитать таблицу соответствия USER >> MAC
             DATA_TABLE = pdnan2none(DATA_TABLE)  # замена NaN на None
             # print(DATA_TABLE.head())
             # print('2')
@@ -1208,15 +1206,14 @@ def get_if(DEVICES_RUN):
                     # print('333')
                     # MACLIST_PD= getmacinfo(IP_DEV = IP_DEV,PROFILE = PROFILE)  # получить данные с коммутатора
                     MACLIST_PD = pd.read_excel(
-                        '{path}\\{filename}.xlsx'.format(path=mactable_dir, filename=IP_DEV + '_mactable'),
-                        encoding='cp1251', dtype={'VLAN': str})  # прочитать таблицу соответствия USER >> MAC
+                        '{path}\\{filename}.xlsx'.format(path=mactable_dir, filename=IP_DEV + '_mactable'), dtype={'VLAN': str})  # прочитать таблицу соответствия USER >> MAC
                     MACLIST_PD = pdnan2none(MACLIST_PD)
                     # print('4')
 
                     # DATA_TABLE = compare_mac_pd_tables(DATA_TABLE, MACLIST_PD, IP_DEV, HOSTNAME, PROFILE, CFG)
                     DATA_TABLE = compare_mac_pd_tables_simple(DATA_TABLE, MACLIST_PD, IP_DEV, HOSTNAME, PROFILE)
 
-                    DATA_TABLE.to_excel('{path}\\{filename}'.format(path=data_dir, filename=CSV), encoding='cp1251',
+                    DATA_TABLE.to_excel('{path}\\{filename}'.format(path=data_dir, filename=CSV),
                                         index=False)  # save to xlsx file
                 except Exception as e:
                     print('get_if(DEVICES_RUN) 2nd cycle', e)
@@ -1298,10 +1295,10 @@ def update_if_info(DEVICES_RUN_IF):
             if os.path.exists(MACF_PATH):  # если есть файл с данными о MAC адресах
                 print('{:<40s}{:<16s}{:<60s}{:<15s}'.format(HOSTNAME, IP_DEV, MACF_PATH, 'Processing'))
 
-                MACLIST_PD = pd.read_excel(MACF_PATH, encoding='cp1251',
+                MACLIST_PD = pd.read_excel(MACF_PATH,
                                            dtype={'VLAN': str, 'MAC': str})  # прочитать таблицу MAC адресов
 
-                # MACLIST_PD = pd.read_excel(MACF_PATH, encoding='cp1251',dtype=str)  # прочитать таблицу MAC адресов
+                # MACLIST_PD = pd.read_excel(MACF_PATH,dtype=str)  # прочитать таблицу MAC адресов
 
                 MACLIST_PD = pdnan2none(MACLIST_PD)
 
@@ -1343,10 +1340,10 @@ def cmd_mac_sec_3548(DEVICES_RUN_IF):  # form portsec commands for Cisco 3548 mo
             if os.path.exists(MACF_PATH):  # если есть файл с данными о MAC адресах
                 print('{:<40s}{:<16s}{:<60s}{:<15s}'.format(HOSTNAME, IP_DEV, MACF_PATH, 'Processing'))
 
-                MACLIST_PD = pd.read_excel(MACF_PATH, encoding='cp1251',
+                MACLIST_PD = pd.read_excel(MACF_PATH,
                                            dtype={'VLAN': str, 'MAC': str})  # прочитать таблицу MAC адресов
 
-                # MACLIST_PD = pd.read_excel(MACF_PATH, encoding='cp1251',dtype=str)  # прочитать таблицу MAC адресов
+                # MACLIST_PD = pd.read_excel(MACF_PATH,dtype=str)  # прочитать таблицу MAC адресов
 
                 MACLIST_PD = pdnan2none(MACLIST_PD)
 
@@ -1411,7 +1408,7 @@ def find_strange_ports(DEVICES_RUN, THRESHOLD_MIN, THRESHOLD_MAX, VLAN_COUNT_THR
             print(SEGMENT, IP_DEV, HOSTNAME, PROFILE)
 
             MACLIST_PD = pd.read_excel(
-                '{path}\{filename}.xlsx'.format(path=mactable_dir, filename=IP_DEV + '_mactable'), encoding='cp1251',
+                '{path}\{filename}.xlsx'.format(path=mactable_dir, filename=IP_DEV + '_mactable'),
                 dtype={'VLAN': str, 'MAC': str})  # прочитать таблицу MAC адресов
 
             MACLIST_PD = pdnan2none(MACLIST_PD)
@@ -1476,7 +1473,7 @@ def find_strange_ports(DEVICES_RUN, THRESHOLD_MIN, THRESHOLD_MAX, VLAN_COUNT_THR
 
             '''
             if not MACLIST_PD_OUT.empty:
-                MACLIST_PD_OUT.to_csv('csv\\mactable\\strangeports\\{0}\\{1}_mactable_strangeports.csv'.format(NOWSTR,HOSTNAME), sep=';', encoding='cp1251',index=False)  # save to csv file
+                MACLIST_PD_OUT.to_csv('csv\\mactable\\strangeports\\{0}\\{1}_mactable_strangeports.csv'.format(NOWSTR,HOSTNAME), sep=';',index=False)  # save to csv file
             '''
         except Exception as e:
             print('find_strange_ports(DEVICES_RUN, THRESHOLD_MIN, THRESHOLD_MAX, VLAN_COUNT_THRESHOLD)', HOSTNAME,
@@ -1518,8 +1515,7 @@ def find_strange_ports(DEVICES_RUN, THRESHOLD_MIN, THRESHOLD_MAX, VLAN_COUNT_THR
 
     if not STRANGE_IF_PD.empty:
         STRANGE_IF_PD.to_excel(
-            '{path}\\{nowtime}\\Strangeports_Summary_{nowtime}.xlsx'.format(path=strangeports_dir, nowtime=NOWSTR),
-            encoding='cp1251', index=False)  # save to xslx file
+            '{path}\\{nowtime}\\Strangeports_Summary_{nowtime}.xlsx'.format(path=strangeports_dir, nowtime=NOWSTR), index=False)  # save to xslx file
 
     return STRANGE_IF_PD
 
@@ -1531,7 +1527,7 @@ def form_cmd(VAR, PROF, TEMPLATE):  # формирование команды н
         CMDCFG = template_ios.render(DICT=VAR, PROFILE=PROF)  # подстановка значений переменных в шаблон
         # print(CMDCFG)
         # print(filter(None,CMDCFG.splitlines()))
-        # CMDCFG = list(filter(None, CMDCFG.splitlines()))  # split config lines && delete empty ones
+        #CMDCFG = list(filter(None, CMDCFG.splitlines()))  # split config lines && delete empty ones
         CMDCFG = re.sub(r'\s*(.*)\s*?(\n)', r'\1\n', CMDCFG)
     except Exception as e:
         print('form_cmd(VAR, PROF, TEMPLATE)', e)
@@ -1548,13 +1544,11 @@ def form_cmd_pd(DEVICES_RUN, FILENAME):
 
         try:
             # если поле DATAFILE - не пустое, данные для формирования команды берутся из xlsx файла
-            if DEVICES_RUN[DATA_COLUMN][i] == DEVICES_RUN[DATA_COLUMN][i] and DEVICES_RUN[DATA_COLUMN][i] != None:
+            if DEVICES_RUN[DATA_COLUMN][i] == DEVICES_RUN[DATA_COLUMN][i] and DEVICES_RUN[DATA_COLUMN][i] != None and DEVICES_RUN[DATA_COLUMN][i] != 'nan':
                 # Обработка данных
-                DATA_TABLE = pd.read_excel(
-                    '{path}\\{filename}'.format(path=data_dir, filename=DEVICES_RUN[DATA_COLUMN][i]), encoding='cp1251',
-                    dtype={'MAX_MAC': str, 'VLAN_NEW': str, 'VLAN_CUR': str, 'VLAN_ORIG': str, 'Access VLAN': str,
-                           'Voice VLAN': str})  # прочитать таблицу с данными
-                # DATA_TABLE = pd.read_excel('{path}\\{filename}'.format(path = data_dir, filename = DEVICES_RUN[DATA_COLUMN][i]), encoding='cp1251', dtype=str )  # прочитать таблицу с данными
+                print(DEVICES_RUN[DATA_COLUMN][i])
+                DATA_TABLE = pd.read_excel('{path}\\{filename}'.format(path=data_dir, filename=DEVICES_RUN[DATA_COLUMN][i]), dtype=str)  # прочитать таблицу с данными
+                # DATA_TABLE = pd.read_excel('{path}\\{filename}'.format(path = data_dir, filename = DEVICES_RUN[DATA_COLUMN][i]), dtype=str )  # прочитать таблицу с данными
 
                 DATA_TABLE_DEV = DATA_TABLE[
                     DATA_TABLE[IP_COLUMN] == IP]  # выбираем только те строки, где IP совпадает с текущим девайсом
@@ -1571,15 +1565,13 @@ def form_cmd_pd(DEVICES_RUN, FILENAME):
                 # write to excel
                 print('Saving file ' + '{path}\\{filename}'.format(path=data_dir, filename=DEVICES_RUN[DATA_COLUMN][i]))
                 # DATA_TABLE = pdnan2none(DATA_TABLE)
-                DATA_TABLE.to_excel('{path}\\{filename}'.format(path=data_dir, filename=DEVICES_RUN[DATA_COLUMN][i]),
-                                    encoding='cp1251', index=False)
+                DATA_TABLE.to_excel('{path}\\{filename}'.format(path=data_dir, filename=DEVICES_RUN[DATA_COLUMN][i]), index=False)
 
             # если поле DATAFILE - пустое, команда формируется для девайса
             else:
                 DEVICES_RUN.loc[i, CMDCFG_COLUMN] = form_cmd(DEVICES_RUN.loc[i], PROFILE, CMD_TEMPLATE)
                 print('Saving file ' + '{path}\\{filename}.xlsx'.format(path=data_dir, filename=FILENAME))
-                DEVICES_RUN.to_excel('{path}\\{filename}.xlsx'.format(path=data_dir, filename=FILENAME),
-                                     encoding='cp1251', index=False)  # save to ls file
+                DEVICES_RUN.to_excel('{path}\\{filename}.xlsx'.format(path=data_dir, filename=FILENAME), index=False)  # save to ls file
         except Exception as e:
             print('form_cmd_pd(DEVICES_RUN)', e)
             pass
@@ -1638,12 +1630,11 @@ def sendcmd(**kwargs):
                 kwargs[CONFIG_COLUMN] = ssh.send_command(
                     SHRUN_CMD[kwargs[PROFILE_COLUMN]])  # получить конфиг отправить команду show run
 
-                with open('{path}\\{filename}.cfg'.format(path=cfgbase_dir, filename=IP, nowtime=NOWSTR), 'w',
-                          encoding='utf-8') as file:  # открыть файл
+                with open('{path}\\{filename}.cfg'.format(path=cfgbase_dir, filename=IP, nowtime=NOWSTR), 'w') as file:  # открыть файл
                     file.write(kwargs[CONFIG_COLUMN])  # записать в файл
 
                 with open('{path}\\{filename}_{nowtime}.cfg'.format(path=cfg_dir, filename=HOSTNAME, nowtime=NOWSTR),
-                          'w', encoding='utf-8') as file:  # открыть файл
+                          'w') as file:  # открыть файл
                     file.write(kwargs[CONFIG_COLUMN])  # записать в файл
 
                 print(color.GREEN + '{:<40s}{:<16s}{:<40s}{:<15s}'.format(HOSTNAME, IP, 'Backup', 'OK') + color.END)
@@ -1663,12 +1654,20 @@ def sendcmd(**kwargs):
                             file.write(HOSTNAME + '\n' + IP + '\n')
                             file.write('\n##CONFIG COMMANDS########\n' + CMDCFG + '\n#########################\n')
                             file.write('\n##RESULT#################\n')
-                            # ssh.enable()
+                            
+                            file.write(ssh.enable())
+
                             RESULT = ssh.send_config_set(CMDCFG, exit_config_mode=False)
+                            #RESULT = ssh.send_config_set(CMDCFG)
+                            
                             file.write(RESULT)
 
                             file.write('\nSaving Configuration\n')
+                            
+                            
                             file.write(ssh.send_config_set(SAVECFG_CMD[kwargs[PROFILE_COLUMN]], exit_config_mode=False))
+                            #file.write(ssh.send_config_set(SAVECFG_CMD[kwargs[PROFILE_COLUMN]]))
+                            
                             file.write('\nDisconnecting\n')
                             # ssh.disconnect()
 
@@ -1695,7 +1694,6 @@ def sendcmd(**kwargs):
 
                     # Обработка данных       
                     DATA_TABLE = pd.read_excel('{path}\\{filename}'.format(path=data_dir, filename=kwargs[DATA_COLUMN]),
-                                               encoding='cp1251',
                                                dtype={'VLAN_NEW': str, 'VLAN_CUR': str, 'VLAN_ORIG': str,
                                                       'Access VLAN': str,
                                                       'Voice VLAN': str})  # прочитать таблицу с данными
@@ -1717,6 +1715,8 @@ def sendcmd(**kwargs):
                             # file.write('\n##CONFIG COMMANDS########\n' + norm(reg_blank_lines,CMDCFG) + '\n#########################\n')
                             file.write('\n##RESULT#################\n')
 
+                            file.write(ssh.enable())
+
                             for i in DATA_TABLE_DEV_RUN.index:
                                 try:
                                     CMDCFG = DATA_TABLE_DEV_RUN.loc[i, CMDCFG_COLUMN]
@@ -1728,6 +1728,7 @@ def sendcmd(**kwargs):
                                                                                          'Processing',
                                                                                          DATA_TABLE_DEV_RUN.loc[
                                                                                              i, IF_COLUMN]))
+                                        
                                         CMD_RESULT = ssh.send_config_set(CMDCFG_norm2, exit_config_mode=False)
                                         DATA_TABLE_DEV_RUN.loc[i, RESULT_COLUMN] = CMD_RESULT
                                         file.write('\n' + CMD_RESULT + '\n')
@@ -1741,8 +1742,7 @@ def sendcmd(**kwargs):
                                     continue
 
                             DATA_TABLE_DEV_RUN.to_excel(
-                                '{path}\\{filename}_if_result.xlsx'.format(path=cfgbase_dir, filename=IP),
-                                encoding='cp1251', index=False)
+                                '{path}\\{filename}_if_result.xlsx'.format(path=cfgbase_dir, filename=IP), index=False)
 
                             file.write('\nSaving Configuration\n')
                             file.write(ssh.send_config_set(SAVECFG_CMD[kwargs[PROFILE_COLUMN]], exit_config_mode=False))
@@ -1760,8 +1760,7 @@ def sendcmd(**kwargs):
                         ssh.disconnect()
                     except Exception as ee:
                         DATA_TABLE_DEV_RUN.to_excel(
-                            '{path}\\{filename}_if_result.xlsx'.format(path=cfgbase_dir, filename=IP),
-                            encoding='cp1251', index=False)
+                            '{path}\\{filename}_if_result.xlsx'.format(path=cfgbase_dir, filename=IP), index=False)
                         print('\nError occured with', IP)
                         print('sendcmd(**kwargs)', ee)
                         ssh.disconnect()
