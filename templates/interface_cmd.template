@@ -1,6 +1,6 @@
 {% if DICT['Exec'] == 'S' %}
 	{% if DICT['PROFILE'] == 'cisco_ios' %}
 		interface {{DICT['IF']}}
-			description TEST2022
+			no description
 	{% endif %}
 {% endif %}

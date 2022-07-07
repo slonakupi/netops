@@ -1729,11 +1729,12 @@ def sendcmd(**kwargs):
                                                                                          DATA_TABLE_DEV_RUN.loc[
                                                                                              i, IF_COLUMN]))
                                         
-                                        CMD_RESULT = ssh.send_config_set(CMDCFG_norm2, exit_config_mode=False)
+                                        CMD_RESULT = ssh.send_config_set(CMDCFG_norm2, exit_config_mode=False, cmd_verify=False)
                                         DATA_TABLE_DEV_RUN.loc[i, RESULT_COLUMN] = CMD_RESULT
                                         file.write('\n' + CMD_RESULT + '\n')
                                 except Exception as e_cmd:
                                     # DATA_TABLE_DEV_RUN.loc[i,RESULT_COLUMN] = str(e_cmd)
+                                    print(str(e_cmd))
                                     print(color.RED + '{:<40s}{:<16s}{:<40s}{:<15s}{:<25s}'.format(HOSTNAME, IP,
                                                                                                    'Send CMD to IF',
                                                                                                    'FAIL',
